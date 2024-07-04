@@ -1,0 +1,46 @@
+// import io;
+
+function doublyLinkedNode(next, prev, data) {
+  return {
+    retain next: next,
+    retain prev: prev,
+    retain data: data
+  }
+}
+
+function doublyLinkedList(firstNode, lastNode) {
+  return {
+    retain firstNode: firstNode,
+    retain lastNode: lastNode
+  }
+}
+
+function insertBefore(list, node, newNode) {
+  newNode.next = node;
+  if (node.prev) {
+    newNode.prev = node.prev;
+    node.prev.next = newNode;
+  } else {
+    newNode.prev = null;
+    list.firstNode = newNode;
+  }
+  node.prev = newNode;
+  return node.prev;
+}
+
+function insertBeginning(list, newNode) {
+  if (list.firstNode)
+    return insertBefore(list, list.firstNode, newNode);
+  list.firstNode = newNode;
+  list.lastNode = newNode;
+  newNode.prev = null;
+  newNode.next = null;
+}
+
+function remove(list, node) {
+  if (node.prev) node.prev.next = node.next
+  else { list.firstNode = node.next }
+
+  if (node.next) node.next.prev = node.prev
+  else list.lastNode = node.prev
+}

@@ -1,0 +1,58 @@
+import "dll.vxl" as dll;
+
+// LRU Cache
+function lru(max) {
+  var count = 0;
+  var cache = {};
+  var list = dll.doublyLinkedList(null, null);
+
+  // Remove least recently used
+  function pop() {
+    cache[list.lastNode.data] = null;
+    dll.remove(list, list.lastNode);
+    return count--;
+  }
+
+  // Apply access side-effects
+  function access(key) {
+    dll.remove(list, cache[key].node);
+    return dll.insertBeginning(list, cache[key].node);
+  }
+
+  // Set an item in the cache
+  function _set(key, value) {
+    if (count + 1 > max) pop();
+    count = count + 1;
+    cache[key] = {
+      retain value: value,
+      retain node: dll.doublyLinkedNode(null, null, key)
+    }
+    return insertBeginning(list, cache[key].node);
+  }
+
+  // Get an item from the cache
+  function _get(key) {
+    if (cache[key]) {
+      access(key);
+      return cache[key].value;
+    }
+  }
+
+  function count() {
+    return count;
+  }
+
+  function _debug() {
+    return {
+      retain firstNode: list.firstNode,
+      retain lastNode: list.lastNode
+    }
+  }
+  
+  return {
+    retain setItem: _set,
+    retain getItem: _get,
+    retain count: count,
+    retain _debug: _debug
+  }
+}

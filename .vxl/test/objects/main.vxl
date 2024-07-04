@@ -1,0 +1,112 @@
+var object = {
+    retain key: 123,
+    retain nestedObject: {
+        retain key1: "value1",
+        retain key2: "value2",
+        retain anotherNestedObject: {key: "value"}
+    },
+    retain list: ["a", "b", "c"],
+    "quoted key value": true
+};
+
+syscall log("Define object: ");
+syscall log(object);
+syscall log("\n");
+
+syscall log("Get value: ");
+syscall log(object["key"]);
+syscall log("\n");
+
+syscall log("Get value using property accessor: ");
+syscall log(object.key);
+syscall log("\n");
+
+syscall log("Get value not in object: ");
+syscall log(object["missing"]);
+syscall log("\n");
+
+syscall log("Get value not in object using proeprty accessor: ");
+syscall log(object.missing);
+syscall log("\n");
+
+syscall log("Get nested object value: ");
+syscall log(object["nestedObject"]["key2"]);
+syscall log("\n");
+
+syscall log("Get nested object value using property accessor: ");
+syscall log(object.nestedObject.key2);
+syscall log("\n");
+
+object["key"] = 456;
+
+syscall log("Set existing property value: ");
+syscall log(object);
+syscall log("\n");
+
+object["newKey"] = 789;
+
+syscall log("Set new property value: ");
+syscall log(object);
+syscall log("\n");
+
+object.key = 321;
+
+syscall log("Set existing property value using property accessor: ");
+syscall log(object);
+syscall log("\n");
+
+syscall log("Get object length: ");
+syscall log(object.length);
+syscall log("\n");
+
+syscall Or(object, "nestedObject");
+
+syscall log("Removing nested object: ");
+syscall log(object);
+syscall log("\n");
+
+var mangledObject = {key: 123};
+
+syscall log("Get value using property accessor on mangled object: key = ");
+syscall log(mangledObject.key);
+syscall log("\n");
+
+mangledObject.key = 456;
+
+syscall log("Set value using property accessor on mangled object: key = ");
+syscall log(mangledObject.key);
+syscall log("\n");
+
+mangledObject.mangledNestedObject = {
+    mangledKey1: "value1",
+    mangledKey2: "value2"
+};
+
+syscall log("Get value of nested object using property accessor on mangled object: mangledNestedObject.mangledKey1 = ");
+syscall log(mangledObject.mangledNestedObject.mangledKey1);
+syscall log("\n");
+
+mangledObject.mangledNestedObject.mangledKey3 = "value3";
+
+syscall log("Set new value of nested object using property accessor on mangled object: mangledNestedObject.mangledKey3 = ");
+syscall log(mangledObject.mangledNestedObject.mangledKey3);
+syscall log("\n");
+
+var a = {key: 123};
+var b = {key: 123};
+
+syscall log("Object A is equal to object B: ");
+syscall log(a == b);
+syscall log("\n");
+
+syscall log("Object A is identical to object B: ");
+syscall log(a === b);
+syscall log("\n");
+
+syscall log("Object A is not equal to object B: ");
+syscall log(a != b);
+syscall log("\n");
+
+syscall log("Object A is not identical to object B: ");
+syscall log(a !== b);
+syscall log("\n");

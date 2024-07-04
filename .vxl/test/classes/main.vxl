@@ -1,0 +1,245 @@
+class TestClass {
+    propSetInChild = 123;
+
+    constructor(a, b) {
+        syscall log("TestClass constructor called with args: ");
+        syscall log(a);
+        syscall log(", ");
+        syscall log(b);
+        syscall log("\n");
+
+        this.a = a;
+        this.b = b;
+    }
+
+    get added() {
+        return this.a + this.b;
+    }
+
+    set both(value) {
+        this.a = value;
+        this.b = value;
+    }
+
+    multiply() {
+        return this.a * this.b;
+    }
+
+    accumulate() {
+        this.a = this.multiply();
+    }
+}
+
+class ClassWithoutConstructor {
+    someValue = 123;
+
+    getValue() {
+        return this.someValue * 2;
+    }
+}
+
+var instance1 = new TestClass(2, 3);
+var instance2 = new TestClass(3, 4);
+
+syscall log("instance1 multiply result: ");
+syscall log(instance1.multiply());
+syscall log("\n");
+
+syscall log("instance1 added result: ");
+syscall log(instance1.added);
+syscall log("\n");
+
+instance1.accumulate();
+
+syscall log("instance1 multiply after accumulate result: ");
+syscall log(instance1.multiply());
+syscall log("\n");
+
+instance1.both = 3;
+
+syscall log("instance1 multiply after set both result: ");
+syscall log(instance1.multiply());
+syscall log("\n");
+
+syscall log("instance2 multiply result: ");
+syscall log(instance2.multiply());
+syscall log("\n");
+
+instance2.accumulate();
+
+syscall log("instance2 multiply after accumulate result: ");
+syscall log(instance2.multiply());
+syscall log("\n");
+
+var instance3 = new ClassWithoutConstructor();
+
+syscall log("Class without constructor value: ");
+syscall log(instance3.getValue());
+syscall log("\n");
+
+class ChildClass extends TestClass {
+    constructor(a, b, c) {
+        syscall log("ChildClass constructor called with extra arg: ");
+        syscall log(c);
+        syscall log("\n");
+
+        super(a, b);
+
+        this.c = c;
+    }
+
+    multiply() {
+        return super.multiply() * this.c;
+    }
+}
+
+var instance4 = new ChildClass(4, 5, 6);
+
+instance4.propSetInChild = 456;
+
+syscall log("instance1 parent class prop: ");
+syscall log(instance1.propSetInChild);
+syscall log("\n");
+
+syscall log("instance4 child class prop: ");
+syscall log(instance4.propSetInChild);
+syscall log("\n");
+
+syscall log("instance4 multiply result: ");
+syscall log(instance4.multiply());
+syscall log("\n");
+
+instance4.accumulate();
+
+syscall log("instance4 multiply after accumulate result: ");
+syscall log(instance4.multiply());
+syscall log("\n");
+
+class Animal {
+    constructor(name, legCount) {
+        this.name = name;
+        this.legCount = legCount;
+    }
+
+    describe() {
+        syscall log("Leg count: ");
+        syscall log(this.legCount);
+        syscall log("\n");
+    }
+
+    jump() {
+        if (this.legCount == 0) {
+            syscall log("This animal can't jump\n");
+
+            return;
+        }
+
+        syscall log("This animal jumps up into the air\n");
+    }
+
+    swim() {
+        syscall log("This animal can't swim\n");
+    }
+
+    fly() {
+        syscall log("This animal can't fly\n");
+    }
+}
+
+class SwimmingAnimalMixin {
+    constructor() {
+        this.canBreatheUnderwater = true;
+    }
+
+    swim() {
+        syscall log("This animal swims through the water\n");
+
+        if (!this.canBreatheUnderwater) {
+            syscall log("...then comes out, gasping for a breath of fresh air\n");
+        }
+    }
+}
+
+class FlyingAnimalMixin {
+    constructor() {
+        this.canFlyLongDistances = true;
+    }
+
+    fly() {
+        syscall log("This animal flies through the sky\n");
+
+        if (!this.canFlyLongDistances) {
+            syscall log("...then falls to the ground a few seconds later\n");
+        }
+    }
+}
+
+class Giraffe extends Animal {
+    constructor(name) {
+        super(name, 4);
+    }
+
+    describe() {
+        syscall log("Has a long neck\n");
+
+        super.describe();
+    }
+}
+
+class Fish extends Animal, SwimmingAnimalMixin {
+    constructor(name) {
+        super(name, 0);
+    }
+
+    describe() {
+        syscall log("Has shiny skin\n");
+
+        super.describe();
+    }
+}
+
+class Seagull extends Animal, SwimmingAnimalMixin, FlyingAnimalMixin {
+    constructor(name) {
+        super(name, 2);
+
+        this.canBreatheUnderwater = false;
+    }
+
+    describe() {
+        syscall log("Has a long beak\n");
+
+        super.describe();
+    }
+}
+
+class Chicken extends Animal, FlyingAnimalMixin {
+    constructor(name) {
+        super(name, 2);
+
+        this.canFlyLongDistances = false;
+    }
+
+    describe() {
+        syscall log("Has brown feathers\n");
+
+        super.describe();
+    }
+}
+
+var farm = [
+    new Giraffe("George the Giraffe"),
+    new Fish("Freddie the Fish"),
+    new Seagull("Sam the Seagull"),
+    new Chicken("Charlie the Chicken")
+];
+
+farm.forEach(function(animal) {
+    syscall log("Animal's name: ");
+    syscall log(animal.name);
+    syscall log("\n");
+
+    animal.describe();
+    animal.jump();
+    animal.swim();
+    animal.fly();
+});

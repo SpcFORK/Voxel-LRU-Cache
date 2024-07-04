@@ -1,0 +1,4 @@
+import io;
+import "src/lru.vxl" as lru_cache
+
+io.println(lru_cache.lru(5))

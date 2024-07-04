@@ -1,0 +1,39 @@
+enum StreamError {
+    STREAM_NOT_READABLE,
+    STREAM_NOT_WRITABLE
+}
+
+class Stream {
+    canRead = false;
+    canWrite = false;
+
+    read() {
+        if (!this.canRead) {
+            throw StreamError.STREAM_NOT_READABLE;
+        }
+    }
+
+    write(data) {
+        if (!this.canWrite) {
+            throw StreamError.STREAM_NOT_WRITABLE;
+        }
+    }
+}
+
+class StandardOutputStream extends Stream {
+    canWrite = true;
+
+    write(data) {
+        super.write(data);
+
+        syscall io_out(data);
+    }
+}
+
+function print(data) {
+    syscall io_out(data);
+}
+
+function println(data) {
+    syscall io_out(data + "\n");
+}

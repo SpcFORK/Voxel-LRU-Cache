@@ -1,0 +1,191 @@
+enum Enum {
+    USED_PASS,
+    UNUSED_FAIL
+}
+
+function unknownReturner() {
+    return 1 + 1;
+}
+
+var alwaysTruthy = true;
+var alwaysFalsy = false;
+var alwaysUnknown = unknownReturner();
+var falsyToStartWith = false;
+
+function check() {
+    if (falsyToStartWith) {
+        "PASS if falsyToStartWith";
+    } else {
+        "PASS else falsyToStartWith";
+    }
+}
+
+if (alwaysTruthy) {
+    "PASS if alwaysTruthy";
+} else {
+    "FAIL";
+}
+
+if (alwaysFalsy) {
+    "FAIL";
+} else {
+    "PASS else alwaysFalsy";
+}
+
+if (alwaysUnknown) {
+    "PASS if alwaysUnknown";
+} else {
+    "PASS else alwaysUnknown";
+}
+
+if (!alwaysTruthy) {
+    "FAIL";
+}
+
+if (!alwaysFalsy) {
+    "PASS if !alwaysFalsy";
+}
+
+if (!alwaysUnknown) {
+    "PASS if !alwaysUnknown";
+}
+
+if (true && alwaysTruthy) {
+    "PASS if true && alwaysTruthy";
+}
+
+if (alwaysTruthy && alwaysFalsy) {
+    "FAIL";
+}
+
+if (alwaysTruthy && alwaysUnknown) {
+    "PASS if alwaysTruthy && alwaysUnknown";
+}
+
+if (alwaysFalsy || alwaysTruthy) {
+    "PASS if alwaysFalsy || alwaysTruthy";
+}
+
+if (alwaysFalsy || alwaysUnknown) {
+    "PASS if alwaysFalsy || alwaysUnknown";
+}
+
+while (alwaysFalsy) {
+    "FAIL";
+}
+
+for (; alwaysFalsy;) {
+    "FAIL";
+}
+
+if (alwaysTruthy ? true : "FAIL") {
+    "PASS ternary alwaysTruthy";
+}
+
+if (alwaysFalsy ? "FAIL" : true) {
+    "PASS ternary alwaysFalsy";
+}
+
+if (alwaysUnknown ? "PASS ternary alwaysUnknown ifTrue" : true) {
+    "PASS ternary alwaysUnknown";
+}
+
+falsyToStartWith = true;
+
+check();
+
+function sideEffect() {
+    syscall log("Side effect called\n");
+}
+
+var ClassSideEffect = {
+    constructor: function() {
+        syscall log("Class side effect called\n");
+    }
+};
+
+var unusedC_FAIL = "FAIL";
+var unusedB_FAIL = unusedC_FAIL;
+var unusedA_FAIL = unusedB_FAIL;
+
+var usedC_PASS = "PASS usedC";
+var usedB_PASS = usedC_PASS;
+var usedA_PASS = usedB_PASS;
+
+var sideEffect_FAIL = sideEffect();
+var classSideEffect_FAIL = new ClassSideEffect();
+
+Enum.USED_PASS;
+
+usedA_PASS;
+
+function unusedFunctionC_FAIL() {
+    "FAIL";
+}
+
+function unusedFunctionB_FAIL() {
+    unusedFunctionC_FAIL();
+}
+
+function unusedFunctionA_FAIL() {
+    unusedFunctionB_FAIL();
+}
+
+function usedFunctionC_PASS() {
+    "PASS usedFunctionC";
+}
+
+function usedFunctionB_PASS() {
+    usedFunctionC_PASS();
+}
+
+function usedFunctionA_PASS() {
+    usedFunctionB_PASS();
+}
+
+usedFunctionA_PASS();
+
+if (#used(usedA_PASS)) {
+    "PASS if #used(usedA_PASS)";
+}
+
+if (#used(unusedA_FAIL)) {
+    "FAIL";
+}
+
+while (false) {
+    "FAIL";
+}
+
+class UnusedClass_FAIL {
+    unusedClassProp_FAIL = "FAIL";
+}
+
+class SideEffectClass_PASS {
+    sideEffectUnusedClassProp_FAIL = sideEffect();
+    classSideEffectUnusedClassProp_FAIL = new ClassSideEffect();
+}
+
+class UsedClass_PASS {
+    unusedProp_FAIL = "FAIL";
+    usedProp_PASS = "PASS usedProp";
+
+    sideEffectProp_FAIL = sideEffect();
+    classSideEffectProp_FAIL = new ClassSideEffect();
+
+    constructor() {
+        this.usedProp_PASS;
+
+        this.usedMethod_PASS();
+    }
+
+    unusedMethod_FAIL() {
+        "FAIL";
+    }
+
+    usedMethod_PASS() {
+        "PASS usedMethod";
+    }
+}
+
+new UsedClass_PASS();

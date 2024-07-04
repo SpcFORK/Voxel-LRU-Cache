@@ -1,0 +1,53 @@
+function outer(a) {
+    function inner(b) {
+        return a + b;
+    }
+
+    return inner;
+}
+
+var one = outer(1);
+
+syscall log(one(1));
+syscall log("\n");
+
+syscall log(one(2));
+syscall log("\n");
+
+var two = outer(2);
+
+syscall log(two(1));
+syscall log("\n");
+
+syscall log(two(2));
+syscall log("\n");
+
+syscall log(outer(3)(2));
+syscall log("\n");
+
+var anonymousOuter = function(a) {
+    return function(b) {
+        return a + b;
+    };
+}
+
+var three = anonymousOuter(3);
+
+syscall log(three(1));
+syscall log("\n");
+
+var four = anonymousOuter(4);
+
+syscall log(four(1));
+syscall log("\n");
+
+function deepOuter(a) {
+    return function(b) {
+        return function(c) {
+            return a * b * c;
+        };
+    };
+}
+
+syscall log(deepOuter(2)(3)(4));
+syscall log("\n");

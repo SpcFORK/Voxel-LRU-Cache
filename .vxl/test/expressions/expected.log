@@ -1,0 +1,40 @@
+Complex expression result: 7
+Stored ternary expression result: result is 7
+Immediate ternary expression result: result is not 6
+Float value result: -3.782E-6
+Initial count value: 2
+Count prefix increment: 3
+New count value: 3
+Count suffix increment: 3
+New count value: 4
+Count prefix decrement: 3
+New count value: 3
+Count suffix decrement: 3
+New count value: 2
+Count operator assignment increment: 4
+New count value: 4
+Count operator assignment decrement: 2
+New count value: 2
+Index accessor count prefix increment: 3
+New count value: 3
+Index accessor operator assignment increment: 5
+New count value: 5
+Property accessor count prefix increment: 3
+New count value: 3
+Property accessor operator assignment increment: 5
+New count value: 5
+Nullish coalescing assignment operator on null value
+Side effect called
+Check value: 123
+Nullish coalescing assignment operator on non-null value
+Check value: 0
+Nullish coalescing assignment operator on null value via index accessor
+Side effect called
+Check value: 123
+Nullish coalescing assignment operator on non-null value via index accessor
+Check value: 0
+Nullish coalescing assignment operator on null value via property accessor
+Side effect called
+Check value: 123
+Nullish coalescing assignment operator on non-null value via property accessor
+Check value: 0

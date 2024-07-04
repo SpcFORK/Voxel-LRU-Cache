@@ -1,0 +1,8 @@
+Byte 1: A
+Byte 2: B
+Buffer: ABC Hello, world! This is a buffer.
+Size of buffer: 35
+Get byte at index 1 from buffer: B
+Set byte at index 1 in buffer: D
+Section of big buffer: ........
+Write small buffer into big buffer: Hello, w

@@ -1,0 +1,39 @@
+var string = "abcdef";
+
+syscall log("String: ");
+syscall log(string);
+syscall log("\n");
+
+syscall log("Size: ");
+syscall log(string.size);
+syscall log("\n");
+
+syscall log("Reversed: ");
+syscall log(string.reverse());
+syscall log("\n");
+
+syscall log("Cut start: ");
+syscall log(string.cutStart(4));
+syscall log("\n");
+
+syscall log("Cut end: ");
+syscall log(string.cutEnd(4));
+syscall log("\n");
+
+syscall log("Substring: ");
+syscall log(string.substring(2, 4));
+syscall log("\n");
+
+syscall log("Pad start: ");
+syscall log(string.padStart(10, "123"));
+syscall log("\n");
+
+syscall log("Pad end: ");
+syscall log(string.padEnd(10, "123"));
+syscall log("\n");
+
+var numericString = "1234";
+
+syscall log("Numeric string to number + 1: ");
+syscall log(numericString.toNumber() + 1);
+syscall log("\n");

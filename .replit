@@ -1,0 +1,21 @@
+modules = ["nodejs-20", "bash", "deno-1"]
+hidden = [".config", ".vxl"]
+
+run =  "chmod +x .config/bin/voxel; deno run --allow-read --allow-write .vxl/tools/vxbuild-js/vxbuild.js code.vxl -o code.vxc; voxel code.vxc"
+entrypoint = "README.md"
+
+[env]
+XDG_CONFIG_HOME = "/home/runner/.config"
+PATH = "/home/runner/$REPL_SLUG/.config/bin:$PATH"
+
+[packager]
+language = "voxel"
+
+[unitTest]
+language = "voxel"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix", ".config", ".vxl"]
+
+[nix]
+channel = "stable-23_11"

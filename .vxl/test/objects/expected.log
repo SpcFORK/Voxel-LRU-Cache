@@ -1,0 +1,20 @@
+Define object: {"key":123,"nestedObject":{"key1":"value1","key2":"value2","anotherNestedObject":{"key":"value"}},"list":["a","b","c"],"quoted key value":true}
+Get value: 123
+Get value using property accessor: 123
+Get value not in object: null
+Get value not in object using proeprty accessor: null
+Get nested object value: value2
+Get nested object value using property accessor: value2
+Set existing property value: {"key":456,"nestedObject":{"key1":"value1","key2":"value2","anotherNestedObject":{"key":"value"}},"list":["a","b","c"],"quoted key value":true}
+Set new property value: {"key":456,"nestedObject":{"key1":"value1","key2":"value2","anotherNestedObject":{"key":"value"}},"list":["a","b","c"],"quoted key value":true,"newKey":789}
+Set existing property value using property accessor: {"key":321,"nestedObject":{"key1":"value1","key2":"value2","anotherNestedObject":{"key":"value"}},"list":["a","b","c"],"quoted key value":true,"newKey":789}
+Get object length: 5
+Removing nested object: {"key":321,"list":["a","b","c"],"quoted key value":true,"newKey":789}
+Get value using property accessor on mangled object: key = 123
+Set value using property accessor on mangled object: key = 456
+Get value of nested object using property accessor on mangled object: mangledNestedObject.mangledKey1 = value1
+Set new value of nested object using property accessor on mangled object: mangledNestedObject.mangledKey3 = value3
+Object A is equal to object B: true
+Object A is identical to object B: false
+Object A is not equal to object B: false
+Object A is not identical to object B: true
